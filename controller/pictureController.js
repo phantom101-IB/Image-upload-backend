@@ -12,16 +12,14 @@ const getAllPics = async (req, res) => {
 }
 
 const getAllUserPics = async (req, res) => {
-    const {
-        user: { userId },
-        params: { name: username },
-    } = req
+    // const {
+    //     user: { userId },
+    //     params: { name: username },
+    // } = req
 
-    console.log(username)
+    const { id: userId } = req.params
 
-    const photo = await Photos.find({ createdBy: userId, name: username }).sort(
-        "createdAt"
-    )
+    const photo = await Photos.find({ createdBy: userId }).sort("createdAt")
 
     if (!photo || photo.length === 0) {
         throw new notFoundErr(`Not Photos available for user: ${userId}`)

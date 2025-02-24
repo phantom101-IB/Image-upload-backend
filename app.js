@@ -23,19 +23,19 @@ app.use(express.json())
 app.use(express.static("./public"))
 app.use(cors())
 
-const conn = mongoose.createConnection(process.env.MONGO_LOCAL);
+const conn = mongoose.createConnection(process.env.MONGO_LOCAL)
 
-let gfs;
+let gfs
 
-conn.once("open", ()=>{
-  gfs = new mongoose.mongo.GridFSBucket(conn.db)
+conn.once("open", () => {
+    gfs = new mongoose.mongo.GridFSBucket(conn.db)
 })
 
 // routes usage
 app.use("/api/v1/All", allRoute)
 app.use("/api/v1/photos", AuthWare, upload.single("image"), photoRoute)
 app.use("/api/v1/auth", userRoute)
-app.use("/api/v1/All/:filename", async (req,res)=>{
+app.use("/api/v1/All/:filename", async (req, res) => {
     gfs.openDownloadStreamByName(req.params.filename).pipe(res)
 })
 
