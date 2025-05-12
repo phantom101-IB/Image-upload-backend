@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(express.static("./public"))
 app.use(cors())
 
-const conn = mongoose.createConnection(process.env.MONGO_LOCAL)
+const conn = mongoose.createConnection(process.env.MONGO_URI)
 
 let gfs
 
@@ -46,7 +46,7 @@ const PORT = 3000 || process.env.PORT
 
 const start = async () => {
     try {
-        await connectDB(process.env.MONGO_LOCAL)
+        await connectDB(process.env.MONGO_URI)
         app.listen(PORT, () => {
             console.log(`Port ${PORT} is live...`)
         })
